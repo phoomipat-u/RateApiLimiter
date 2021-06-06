@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RateApiLimiter.Domain;
+using RateApiLimiter.Interfaces;
+using RateApiLimiter.Services;
 
 namespace RateApiLimiter
 {
@@ -26,8 +24,20 @@ namespace RateApiLimiter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "RateApiLimiter", Version = "v1"}); });
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                });
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "RateApiLimiter", Version = "v1"});
+            });
+
+            services.AddTransient<IHotelService, HotelService>();
+            services.AddSingleton<IStorage<Hotel>, HotelStorage>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
