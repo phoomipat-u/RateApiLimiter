@@ -4,6 +4,7 @@ namespace RateApiLimiter.Domain
 {
     public class Hotel
     {
+        // DO NOT REMOVE - Used when reading from CSV
         public Hotel()
         {
             

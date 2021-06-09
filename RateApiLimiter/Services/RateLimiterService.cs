@@ -18,8 +18,6 @@ namespace RateApiLimiter.Services
         private readonly ConcurrentDictionary<string, (DateTime, long)> _currentLimit = new();
         private readonly Dictionary<string, RateLimiterConfiguration.EndpointRateLimitConfiguration> _configurations = new();
         
-        private Timer timer1;
-
         public RateLimiterService(ILogger<RateLimiterService> logger, IOptions<RateLimiterConfiguration> rateLimiterConfiguration)
         {
             _logger = logger;
@@ -27,15 +25,15 @@ namespace RateApiLimiter.Services
 
         }
 
-        public bool RateLimitApi(string path)
+        public bool AllowApiCall(DateTime now, string path)
         {
             if (_configurations.TryGetValue(path, out var config))
             {
-                var (endOfPeriodTime, counter) = _currentLimit.GetOrAdd(path, (DateTime.UtcNow.AddMilliseconds(config.Period), 0));
+                var (endOfPeriodTime, counter) = _currentLimit.GetOrAdd(path, (now.AddMilliseconds(config.Period), 0));
 
                 if (endOfPeriodTime < DateTime.UtcNow)
                 {
-                    return _currentLimit.TryUpdate(path, (DateTime.UtcNow.AddMilliseconds(config.Period), 1), (endOfPeriodTime, counter)) || RateLimitApi(path);
+                    return _currentLimit.TryUpdate(path, (now.AddMilliseconds(config.Period), 1), (endOfPeriodTime, counter)) || AllowApiCall(now, path);
                 }
                 
                 if (counter >= config.Limit)
@@ -43,13 +41,13 @@ namespace RateApiLimiter.Services
                     return false;
                 }
 
-                return _currentLimit.TryUpdate(path, (endOfPeriodTime, counter+1), (endOfPeriodTime, counter)) || RateLimitApi(path);
+                return _currentLimit.TryUpdate(path, (endOfPeriodTime, counter+1), (endOfPeriodTime, counter)) || AllowApiCall(now, path);
             }
             else
             {
                 _configurations[path] = _rateLimiterConfiguration.Custom.FirstOrDefault(c => c.Endpoint.ToLowerInvariant().Equals(path.ToLowerInvariant())) 
                                         ?? _rateLimiterConfiguration.Default;
-                return RateLimitApi(path);
+                return AllowApiCall(now, path);
             }
         }
     }

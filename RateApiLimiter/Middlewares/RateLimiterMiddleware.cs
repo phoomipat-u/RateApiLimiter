@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using System.Net;
@@ -23,7 +24,7 @@ namespace RateApiLimiter.Middlewares
         {
             var path = context.Request.Path;
 
-            if (_rateLimiterService.RateLimitApi(path))
+            if (_rateLimiterService.AllowApiCall(DateTime.UtcNow, path))
             {
                 await _next(context);
             }

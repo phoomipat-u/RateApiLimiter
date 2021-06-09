@@ -1,7 +1,9 @@
+using System;
+
 namespace Common.Interfaces
 {
     public interface IRateLimiterService
     {
-        bool RateLimitApi(string path);
+        bool AllowApiCall(DateTime now, string path);
     }
 }
