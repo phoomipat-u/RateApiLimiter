@@ -41,11 +41,11 @@ namespace RateApiLimiter.Controllers
         public IEnumerable<Hotel> GetHotel([FromQuery] string? city, [FromQuery] RoomType? roomType, ListSortDirection? priceSortDirection) =>
             GetHotelCommon(city, roomType, priceSortDirection);
         
-        [HttpGet("city")]
+        [HttpGet("City")]
         public IEnumerable<Hotel> GetHotelInCity([FromQuery] string city, [FromQuery] ListSortDirection? priceSortDirection = null) =>
             GetHotelCommon(city, null, priceSortDirection);
 
-        [HttpGet("room")]
+        [HttpGet("Room")]
         public IEnumerable<Hotel> GetHotelWithRoomType([FromQuery] RoomType roomType, [FromQuery] ListSortDirection? priceSortDirection = null) =>
             GetHotelCommon(null, roomType, priceSortDirection);
     }
