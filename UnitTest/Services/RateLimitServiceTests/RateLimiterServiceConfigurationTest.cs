@@ -41,6 +41,7 @@ namespace UnitTest.Services
             });
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
 
+            // Act
             var results = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
@@ -48,6 +49,7 @@ namespace UnitTest.Services
                 results.Add(result);
             }
             
+            // Assert
             Assert.Equal(10, results.Count(r => r));
             Assert.Equal(15, results.Count(r => !r));
         }
@@ -55,6 +57,7 @@ namespace UnitTest.Services
         [Fact]
         public void GivenCustomLimitForHotelApiIsSetTo20_WhenTheApiPathCalledMatchesTheCustomConfiguration_ThenTwentyCallsShouldReturnTrueAndAnotherFiveCallsShouldReturnFalse()
         {
+            // Arrange
             var now = new DateTime(2021, 06, 10).ToUniversalTime();
             var configurationMock = MockUtils.MockOption(new RateLimiterConfiguration()
             {
@@ -75,7 +78,8 @@ namespace UnitTest.Services
 
             });
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
-
+            
+            // Act
             var results = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
@@ -83,6 +87,7 @@ namespace UnitTest.Services
                 results.Add(result);
             }
             
+            // Assert
             Assert.Equal(20, results.Count(r => r));
             Assert.Equal(5, results.Count(r => !r));
         }

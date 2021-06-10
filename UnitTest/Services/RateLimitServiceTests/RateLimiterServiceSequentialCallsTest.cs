@@ -40,7 +40,8 @@ namespace UnitTest.Services
 
             });
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
-
+            
+            // Act
             var results = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
@@ -48,6 +49,7 @@ namespace UnitTest.Services
                 results.Add(result);
             }
             
+            // Assert
             Assert.Equal(10, results.Count(r => r));
             Assert.Equal(15, results.Count(r => !r));
         }

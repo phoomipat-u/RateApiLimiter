@@ -15,8 +15,10 @@ namespace IntegrationTest
         [Fact]
         public async Task GivenNoPriorCallsToTheEndpointAndLimitIsTenCallsPerFiveSeconds_WhenCallingTwentyFiveConcurrentBurstHttpRequests_ShouldReturnTenGoodResponseAndFifteenDenialResponses()
         {
+            // Arrange
             const double endpointLimitPeriod = 5000;
             
+            // Act
             var timer = new Stopwatch();
             timer.Start();
             
@@ -26,6 +28,7 @@ namespace IntegrationTest
             timer.Stop();
             Debug.Assert(timer.ElapsedMilliseconds < endpointLimitPeriod, "Integration requests took longer than the limit period!");
             
+            // Assert
             Assert.Equal(10, results.Count(r => r.StatusCode == HttpStatusCode.OK ));
             Assert.Equal(15, results.Count(r => r.StatusCode == HttpStatusCode.TooManyRequests));
         }
