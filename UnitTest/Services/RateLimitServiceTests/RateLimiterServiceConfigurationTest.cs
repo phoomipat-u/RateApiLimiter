@@ -27,6 +27,7 @@ namespace UnitTest.Services
         [Fact]
         public void GivenTheDefaultConfigurationLimitIsTen_WhenTheApiCalledDoesntMatchAnyCustom_ThenTenCallsShouldReturnTrueAndAnotherFifteenCallsShouldReturnFalse()
         {
+            // Arrange
             var now = new DateTime(2021, 06, 10).ToUniversalTime();
             var configurationMock = MockUtils.MockOption(new RateLimiterConfiguration()
             {

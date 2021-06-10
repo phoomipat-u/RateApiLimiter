@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 using IntegrationTest.Utilities;
-using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,7 +20,7 @@ namespace IntegrationTest
             var timer = new Stopwatch();
             timer.Start();
             
-            var tasks = Helper.GetConcurrentTasks(() => Helper.GenerateRequestAsync("https://localhost:5001/hotel/city?city=Bangkok"), 25);
+            var tasks = Helper.GetConcurrentTasks(() => Helper.GenerateRequestAsync("http://localhost:5001/hotel/city?city=Bangkok"), 25);
             var results = await Task.WhenAll(tasks);
 
             timer.Stop();

@@ -18,11 +18,11 @@ namespace IntegrationTest
 
             const double endpointOneLimitPeriod = 5000;
             const int endpointOneCallAmount = 25;
-            const string endpointOneUri = "https://localhost:5001/hotel/city?city=Bangkok";
+            const string endpointOneUri = "http://localhost:5001/hotel/city?city=Bangkok";
             const int endpointOneLimit = 10;
             
             const int endpointTwoCallAmount = 120;
-            const string endpointTwoUri = "https://localhost:5001/hotel/room?room=Deluxe";
+            const string endpointTwoUri = "http://localhost:5001/hotel/room?room=Deluxe";
             const int endpointTwoLimit = 100;
             
             var endpointOneResults = new List<HttpResponseMessage>();

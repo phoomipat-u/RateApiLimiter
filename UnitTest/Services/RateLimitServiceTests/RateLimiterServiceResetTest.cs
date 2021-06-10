@@ -13,22 +13,23 @@ using ILogger = Castle.Core.Logging.ILogger;
 
 namespace UnitTest.Services
 {
-    public class RateLimiterServiceSequentialCallsTest
+    public class RateLimiterServiceResetTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly ILogger<RateLimiterService> _logger;
         
-        public RateLimiterServiceSequentialCallsTest(ITestOutputHelper testOutputHelper)
+        public RateLimiterServiceResetTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             _logger = _testOutputHelper.BuildLoggerFor<RateLimiterService>();
         }
 
         [Fact]
-        public void GivenThePathCurrentCallInTheDurationIsZeroAndTheLimitIsTenCallsPerFiveSeconds_WhenThereAreTwentyFiveContinuouslySequentialCalls_ThenTenCallsShouldReturnTrueAndAnotherFifteenCallsShouldReturnFalse()
+        public void GivenTheCurrentPeriodLimitExceeded_WhenCalledAgainAfterSetPeriodHasPassed_ThenTheCallCountShouldResetAndAllowAnotherSetOfCalls()
         {
             // Arrange
             var now = new DateTime(2021, 06, 10).ToUniversalTime();
+            var nowFastForwardedFiveSeconds = now.AddMilliseconds(5000);
             var configurationMock = MockUtils.MockOption(new RateLimiterConfiguration()
             {
                 Default = new RateLimiterConfiguration.EndpointRateLimitConfiguration()
@@ -41,15 +42,27 @@ namespace UnitTest.Services
             });
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
 
-            var results = new List<bool>();
+            // Act
+            var firstSetOfCallsResults = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
                 var result = rateLimiterService.AllowApiCall(now, "/hotel");
-                results.Add(result);
+                firstSetOfCallsResults.Add(result);
             }
             
-            Assert.Equal(10, results.Count(r => r));
-            Assert.Equal(15, results.Count(r => !r));
+            Assert.Equal(10, firstSetOfCallsResults.Count(r => r));
+            Assert.Equal(15, firstSetOfCallsResults.Count(r => !r));
+            
+            var secondSetOfCallsResults = new List<bool>();
+            for (var i = 0; i < 25; i++)
+            {
+                var result = rateLimiterService.AllowApiCall(nowFastForwardedFiveSeconds, "/hotel");
+                secondSetOfCallsResults.Add(result);
+            }
+            
+            // Assert
+            Assert.Equal(10, secondSetOfCallsResults.Count(r => r));
+            Assert.Equal(15, secondSetOfCallsResults.Count(r => !r));
         }
     }
 }

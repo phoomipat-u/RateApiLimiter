@@ -27,6 +27,7 @@ namespace UnitTest.Services
         [Fact]
         public async Task GivenThePathCurrentCallInTheDurationIsZeroAndTheLimitIsTenCallsPerFiveSeconds_WhenThereAreTwentyFiveConcurrentBurstCalls_ThenTenCallsShouldReturnTrueAndAnotherFifteenCallsShouldReturnFalse()
         {
+            // Arrange
             var now = new DateTime(2021, 06, 10).ToUniversalTime();
             var configurationMock = MockUtils.MockOption(new RateLimiterConfiguration()
             {
@@ -38,8 +39,11 @@ namespace UnitTest.Services
                 Custom = Array.Empty<RateLimiterConfiguration.EndpointRateLimitConfiguration>()
 
             });
+            
+            // Act
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
 
+            // Assert
             var tasks = GetConcurrentActions(() => rateLimiterService.AllowApiCall(now, "/hotel"), 25);
             var results = await Task.WhenAll(tasks);
             
