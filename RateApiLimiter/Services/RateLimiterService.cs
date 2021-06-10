@@ -36,7 +36,7 @@ namespace RateApiLimiter.Services
             do
             {
                 var (endOfPeriodTime, counter) = _currentLimit.GetOrAdd(endpoint, (now.AddMilliseconds(config.Period), 0));
-                if (endOfPeriodTime < now)
+                if (endOfPeriodTime <= now)
                 {
                     if (_currentLimit.TryUpdate(endpoint, (now.AddMilliseconds(config.Period), 1), (endOfPeriodTime, counter)))
                     {
@@ -70,13 +70,13 @@ namespace RateApiLimiter.Services
 
     public class RateLimiterConfiguration
     {
-        public EndpointRateLimitConfiguration Default { get; set; }
-        public EndpointRateLimitConfiguration[] Custom { get; set; }
-        
-        
+        public EndpointRateLimitConfiguration Default { get; set; } = null!;
+        public EndpointRateLimitConfiguration[] Custom { get; set; } = null!;
+
+
         public class EndpointRateLimitConfiguration
         {
-            public string Endpoint { get; set; }
+            public string Endpoint { get; set; } = null!;
             public double Period { get; set; }
             public int Limit { get; set; }
         }

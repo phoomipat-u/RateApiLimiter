@@ -23,6 +23,7 @@ namespace UnitTest.Services
         [Fact]
         public void GivenThePathCurrentCallInTheDurationIsZeroAndTheLimitIsTenCallsPerFiveSeconds_WhenThereAreTwentyFiveContinuouslySequentialCalls_ThenTenCallsShouldReturnTrueAndAnotherFifteenCallsShouldReturnFalse()
         {
+            // Arrange
             const int callsPerEndpoint = 25;
 
             const string endpointOnePath = "endpointOne";
@@ -58,25 +59,27 @@ namespace UnitTest.Services
             });
             var rateLimiterService = new RateLimiterService(_logger, configurationMock.Object);
 
-            var resultOfendpointOne = new List<bool>();
+            // Act
+            var resultOfEndpointOne = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
                 var result = rateLimiterService.AllowApiCall(now, endpointOnePath);
-                resultOfendpointOne.Add(result);
+                resultOfEndpointOne.Add(result);
             }
             
-            var resultOfendpointTwo = new List<bool>();
+            var resultOfEndpointTwo = new List<bool>();
             for (var i = 0; i < 25; i++)
             {
                 var result = rateLimiterService.AllowApiCall(now, endpointTwoPath);
-                resultOfendpointTwo.Add(result);
+                resultOfEndpointTwo.Add(result);
             }
             
-            Assert.Equal(endpointOneLimit, resultOfendpointOne.Count(r => r));
-            Assert.Equal(callsPerEndpoint - endpointOneLimit, resultOfendpointOne.Count(r => !r));
+            // Assert
+            Assert.Equal(endpointOneLimit, resultOfEndpointOne.Count(r => r));
+            Assert.Equal(callsPerEndpoint - endpointOneLimit, resultOfEndpointOne.Count(r => !r));
             
-            Assert.Equal(endpointTwoLimit, resultOfendpointTwo.Count(r => r));
-            Assert.Equal(callsPerEndpoint - endpointTwoLimit, resultOfendpointTwo.Count(r => !r));
+            Assert.Equal(endpointTwoLimit, resultOfEndpointTwo.Count(r => r));
+            Assert.Equal(callsPerEndpoint - endpointTwoLimit, resultOfEndpointTwo.Count(r => !r));
         }
     }
 }

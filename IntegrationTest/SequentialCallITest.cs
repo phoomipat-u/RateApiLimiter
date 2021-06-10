@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
 using IntegrationTest.Utilities;
-using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -29,7 +24,7 @@ namespace IntegrationTest
             var results = new List<HttpResponseMessage>();
             for (var i = 0; i < 25; i++)
             {
-                results.Add(Helper.GenerateRequest("https://localhost:5001/hotel/city?city=Bangkok"));
+                results.Add(Helper.GenerateRequest("http://localhost:5001/hotel/city?city=Bangkok"));
             }
             timer.Stop();
 
