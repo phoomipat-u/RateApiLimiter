@@ -16,8 +16,10 @@ namespace IntegrationTest
         [Fact]
         public void GivenNoPriorCallsToTheEndpointAndLimitIsTenCallsPerFiveSeconds_WhenCallingTwentyFiveSequentialBurstRequests_ThenShouldReturnTenGoodResponseAndFifteenDenialResponses()
         {
+            // Arrange
             const double endpointLimitPeriod = 5000;
             
+            // Act
             var timer = new Stopwatch();
             timer.Start();
             
@@ -28,6 +30,7 @@ namespace IntegrationTest
             }
             timer.Stop();
 
+            // Assert
             Debug.Assert(timer.ElapsedMilliseconds < endpointLimitPeriod,  "Integration requests took longer than the limit period!");
             Assert.Equal(10, results.Count(r => r.StatusCode == HttpStatusCode.OK));
             Assert.Equal(15, results.Count(r => r.StatusCode == HttpStatusCode.TooManyRequests));

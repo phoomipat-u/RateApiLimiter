@@ -13,8 +13,7 @@ namespace IntegrationTest
         [Fact]
         public void GivenNoPriorCallsToEndpointOneAndEndpointTwo_WhenEndpointOneReachesTheLimitForThatPeriodAndEndpointTwoIsCalled_ThenEndpointTwoCallsShouldNotBeAffectedByEndpointOneLimit()
         {
-            var timer = new Stopwatch();
-            timer.Start();
+            // Arrange
 
             const double endpointOneLimitPeriod = 5000;
             const int endpointOneCallAmount = 25;
@@ -24,6 +23,10 @@ namespace IntegrationTest
             const int endpointTwoCallAmount = 120;
             const string endpointTwoUri = "http://localhost:5001/hotel/room?room=Deluxe";
             const int endpointTwoLimit = 100;
+            
+            // Act
+            var timer = new Stopwatch();
+            timer.Start();
             
             var endpointOneResults = new List<HttpResponseMessage>();
             for (var i = 0; i < endpointOneCallAmount; i++)
@@ -38,6 +41,8 @@ namespace IntegrationTest
             }
             
             timer.Stop();
+            
+            // Assert
             Debug.Assert(timer.ElapsedMilliseconds < endpointOneLimitPeriod, "Integration requests took longer than the limit period!");
             
             Assert.Equal(endpointOneLimit, endpointOneResults.Count(r => r.StatusCode == HttpStatusCode.OK));
