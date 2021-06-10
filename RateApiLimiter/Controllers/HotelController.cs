@@ -22,30 +22,23 @@ namespace RateApiLimiter.Controllers
             _hotelService = hotelService;
         }
 
-        private IEnumerable<Hotel> GetHotelCommon(string? city, RoomType? roomType, ListSortDirection? priceSortDirection)
-        {
-            var queryResult = _hotelService.GetHotels(
-                                                                        hotel => (!roomType.HasValue || roomType == hotel.RoomType)
-                                                                        && (string.IsNullOrEmpty(city) || city == hotel.City)
-                                                                    );
-
-            return priceSortDirection switch
-            {
-                ListSortDirection.Ascending => queryResult.OrderBy(hotel => hotel.Price),
-                ListSortDirection.Descending => queryResult.OrderByDescending(hotel => hotel.Price),
-                _ => queryResult
-            };
-        }
+        private IEnumerable<Hotel> GetHotelCommon(string? city, RoomType? roomType, ListSortDirection? priceSortDirection) =>
+            _hotelService.GetHotels(
+                hotel => (!roomType.HasValue || roomType == hotel.RoomType)
+                         && (string.IsNullOrEmpty(city) || city == hotel.City),
+                priceSortDirection
+            );
+        
         
         [HttpGet("")]
         public IEnumerable<Hotel> GetHotel([FromQuery] string? city, [FromQuery] RoomType? roomType, ListSortDirection? priceSortDirection) =>
             GetHotelCommon(city, roomType, priceSortDirection);
         
-        [HttpGet("city")]
+        [HttpGet("City")]
         public IEnumerable<Hotel> GetHotelInCity([FromQuery] string city, [FromQuery] ListSortDirection? priceSortDirection = null) =>
             GetHotelCommon(city, null, priceSortDirection);
 
-        [HttpGet("room")]
+        [HttpGet("Room")]
         public IEnumerable<Hotel> GetHotelWithRoomType([FromQuery] RoomType roomType, [FromQuery] ListSortDirection? priceSortDirection = null) =>
             GetHotelCommon(null, roomType, priceSortDirection);
     }

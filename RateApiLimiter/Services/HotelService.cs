@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using RateApiLimiter.Domain;
 using RateApiLimiter.Interfaces;
@@ -16,10 +18,15 @@ namespace RateApiLimiter.Services
             _hotelStorage = hotelStorage;
         }
 
-        public IEnumerable<Hotel> GetHotels(Func<Hotel, bool> predicate) => _hotelStorage.Get(predicate);
-        
-        public IEnumerable<Hotel> GetHotelsInCity(string city) => _hotelStorage.Get(hotel => hotel.City == city);
-        
-        public IEnumerable<Hotel> GetHotelsWithRoomType(RoomType roomType) => _hotelStorage.Get(hotel => hotel.RoomType == roomType);
+        public IEnumerable<Hotel> GetHotels(Func<Hotel, bool> predicate, ListSortDirection? priceSortDirection)
+        {
+            var queryResult = _hotelStorage.Get(predicate);
+            return priceSortDirection switch
+            {
+                ListSortDirection.Ascending => queryResult.OrderBy(hotel => hotel.Price),
+                ListSortDirection.Descending => queryResult.OrderByDescending(hotel => hotel.Price),
+                _ => queryResult
+            };
+        }
     }
 }
