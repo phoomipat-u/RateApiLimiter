@@ -22,20 +22,13 @@ namespace RateApiLimiter.Controllers
             _hotelService = hotelService;
         }
 
-        private IEnumerable<Hotel> GetHotelCommon(string? city, RoomType? roomType, ListSortDirection? priceSortDirection)
-        {
-            var queryResult = _hotelService.GetHotels(
-                                                                        hotel => (!roomType.HasValue || roomType == hotel.RoomType)
-                                                                        && (string.IsNullOrEmpty(city) || city == hotel.City)
-                                                                    );
-
-            return priceSortDirection switch
-            {
-                ListSortDirection.Ascending => queryResult.OrderBy(hotel => hotel.Price),
-                ListSortDirection.Descending => queryResult.OrderByDescending(hotel => hotel.Price),
-                _ => queryResult
-            };
-        }
+        private IEnumerable<Hotel> GetHotelCommon(string? city, RoomType? roomType, ListSortDirection? priceSortDirection) =>
+            _hotelService.GetHotels(
+                hotel => (!roomType.HasValue || roomType == hotel.RoomType)
+                         && (string.IsNullOrEmpty(city) || city == hotel.City),
+                priceSortDirection
+            );
+        
         
         [HttpGet("")]
         public IEnumerable<Hotel> GetHotel([FromQuery] string? city, [FromQuery] RoomType? roomType, ListSortDirection? priceSortDirection) =>

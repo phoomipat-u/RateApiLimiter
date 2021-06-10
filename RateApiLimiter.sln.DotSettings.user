@@ -1,6 +1,23 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=27498f78_002D6946_002D4703_002D9129_002D081620759406/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GivenNoPriorCallsToTheEndpointAndLimitIsTenCallsPerFiveSeconds_WhenCallingTwentyFiveSequentialBurstRequests_ShouldReturnTenGoodResponseAndFifteenDenialResponses" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.SequentialCallTest.GivenNoPriorCallsToTheEndpointAndLimitIsTenCallsPerFiveSeconds_WhenCallingTwentyFiveSequentialBurstRequests_ShouldReturnTenGoodResponseAndFifteenDenialResponses&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=422780a1_002D6d12_002D418e_002Dbaa6_002D15b483fb857a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;UnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="D:\Programming\Personal\RateApiLimiter\UnitTest" Presentation="&amp;lt;UnitTest&amp;gt;" /&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Project Location="D:\Programming\Personal\RateApiLimiter\UnitTest" Presentation="&amp;lt;UnitTest&amp;gt;" /&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.UnitTest1.Test1&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.UnitTest1&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Services.RateLimiterServiceConfigurationTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.SequentialCallTest.Test1&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.SequentialCallTest.When&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.MultiEndpointCallTest.When&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.SequentialCallTest.GivenNoPriorCallsToTheEndpointAndLimitIsTenCallsPerFiveSeconds_WhenCallingTwentyFiveSequentialBurstRequests_ShouldReturnTenGoodResponseAndFifteenDenialResponses&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="D:\Programming\Personal\RateApiLimiter\IntegrationTest" Presentation="&amp;lt;IntegrationTest&amp;gt;" /&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4a34543a_002D2216_002D4212_002Db24a_002D7edcd9f34c70/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetHotelsByCityTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
@@ -8,8 +25,14 @@
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=900d38f1_002D5b42_002D4732_002D9f6c_002D5d6cf181b412/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetHotelsByCityTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Controller.HotelController.GetHotelsByCityTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Controller.HotelController.GetHotelsWithRoomTypeTest&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Controller.HotelController.GetHotelsByCityTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Controller.HotelController.GetHotelsWithRoomTypeTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Services.RateLimiterServiceTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::D37B6355-F1A1-4681-9978-C6D60AC1B873::net5.0::UnitTest.Services.RateLimiterServiceSequentialCallsTest.GivenThePathCurrentCallInTheDurationIsZeroAndTheLimitIsTenCallsPerFiveSeconds_WhenThereAreTwentyFiveContinuouslySequentialCalls_ThenTenCallsShouldReturnTrueAndAnotherFifteenCallsShouldReturnFalse&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::A82BF14E-AA0F-49C4-B519-97C66531C91F::net5.0::IntegrationTest.UnitTest1.Test1&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFolder&gt;D37B6355-F1A1-4681-9978-C6D60AC1B873/d:Services/d:RateLimitServiceTests&lt;/ProjectFolder&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

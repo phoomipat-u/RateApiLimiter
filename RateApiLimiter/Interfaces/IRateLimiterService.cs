@@ -4,6 +4,6 @@ namespace Common.Interfaces
 {
     public interface IRateLimiterService
     {
-        bool AllowApiCall(DateTime now, string path);
+        bool AllowApiCall(DateTime now, string endpoint);
     }
 }
