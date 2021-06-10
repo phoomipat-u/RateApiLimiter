@@ -2,7 +2,7 @@
 
 <h3>API Instructions - I’m going to be using Docker so I don’t have to write 2 versions for Windows/Mac </h3>
 1.	Navigate to the root of the project
-2.	Build project image `docker --build-arg ASPNETCORE_ENVIRONMENT=Development build -t rate-api-limiter -f Dockerfile .`
+2.	Build project image `docker build -t rate-api-limiter -f Dockerfile .`
 3.  Run container `docker run --name rate-api-limiter -p 5001:80 rate-api-limiter`
 4.  Navigate to `localhost:5001/swagger` to view the API swagger and the API usage instructions - you can try testing to API here
 5.  (Optional) You can change the limit config in RateApiLLimiter/appsettings.json
@@ -11,17 +11,22 @@
 1.  Navigate to the UnitTest directory
 2.  Run `dotnet test --logger trx` to execute the unit tests and generate a test result file
 
+
 <h3>Rate Limiting Demonstration - Windows</h3>
 1. Run project using dotnet cli or Docker
-2. Start PowerShell
-3. Run `1..25 | ForEach-Object -Parallel { "Start of call $_"; $response = try {Invoke-WebRequest -Uri http://localhost:5001/hotel/city?city=Bangkok -Method Get | Select-Object -Expand StatusCode} catch { $_.Exception.Response.StatusCode } ; "Response Code of call $_ is $response"  ; "End of call $_"  } -ThrottleLimit 25`
-4. You should get 10 successful calls and 15 unsuccessful calls (I couldn't make it return 429 instead of "TooManyRequests")
+2. Navigate to root of project
+3. Execute RateLimitTest.bash using `.\limit-test-windows.ps1`
+4. The result will show that the first 10 calls is successful and the other 15 will return 429 or TooManyRequests
+
+Note that the limit per five seconds for the `/city` endpoint is 10
 
 <h3>Rate Limiting Demonstration - Linux</h3>
 1. Run project using dotnet cli or Docker
-2. Start Terminal
-3.
-4.
+2. Navigate to root of project
+3. Execute RateLimitTest.bash using `bash limit-test-linux.bash`
+4. The result will show that the first 10 calls is successful and the other 15 will return 429 or TooManyRequests
+
+Note that the limit per five seconds for the `/city` endpoint is 10
 
 <h3>Design Choices</h3>
 -	The reason why I used an algorithm similar to Sliding Log is because we can have different periods for each endpoint. If we used the Fixed Window algorithm, we will require an expiration mechanism to manage the state. Leaky Bucket is not suitable because we’re looking to limit the API call over a period of time whereas the Leaky Bucket limits the API call to a specific amount at any given moment. Sliding Window is not used here because the requirement does not tell us to factor in the previous window when calculating the current window’s limit.
